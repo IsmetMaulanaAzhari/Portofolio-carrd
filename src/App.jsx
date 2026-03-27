@@ -1,35 +1,59 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import { motion } from 'framer-motion';
+import { FaInstagram, FaGithub, FaLinkedin } from 'react-icons/fa';
+import './App.css';
+// Nanti jika kamu sudah punya file GIF/Foto di folder src/assets, hapus komentar di bawah ini:
+// import profilePic from './assets/profile.gif';
 
 function App() {
-  const [count, setCount] = useState(0)
+  // Konfigurasi animasi dari framer-motion
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="container">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={{
+          visible: { transition: { staggerChildren: 0.15 } } // Efek muncul berurutan
+        }}
+      >
+        {/* Foto Profil / GIF */}
+        <motion.img
+          variants={itemVariants}
+          // src={profilePic} // Gunakan ini kalau file fotonya sudah di-import
+          src="https://via.placeholder.com/150" // Ini gambar sementara, hapus nanti
+          alt="Profile"
+          className="profile-pic"
+        />
+
+        {/* Nama & Bio */}
+        <motion.h1 variants={itemVariants}>Ismet Maulana Azhari</motion.h1>
+        <motion.p variants={itemVariants}>
+          Informatics Student | Web Developer
+          <br/>
+          Selamat datang di portofolio saya!
+        </motion.p>
+
+        {/* Tombol Links */}
+        <motion.a variants={itemVariants} href="https://github.com/username-kamu" target="_blank" rel="noreferrer" className="link-button">
+          <FaGithub size={20} /> GitHub
+        </motion.a>
+
+        <motion.a variants={itemVariants} href="https://linkedin.com/in/username-kamu" target="_blank" rel="noreferrer" className="link-button">
+          <FaLinkedin size={20} /> LinkedIn
+        </motion.a>
+
+        <motion.a variants={itemVariants} href="https://instagram.com/username-kamu" target="_blank" rel="noreferrer" className="link-button">
+          <FaInstagram size={20} /> Instagram
+        </motion.a>
+
+      </motion.div>
+    </div>
+  );
 }
 
-export default App
+export default App;
