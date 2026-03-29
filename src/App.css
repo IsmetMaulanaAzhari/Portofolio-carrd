@@ -89,3 +89,51 @@ p {
   transform: translateY(-3px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
+
+.section-title.connect-section {
+  margin-top: 35px;
+}
+
+/* Judul baru untuk galeri GIF */
+.section-title.gif-section {
+  margin-top: 40px;
+}
+
+/* Kontainer Utama Galeri dengan CSS Grid */
+.gif-grid {
+  display: grid;
+  /* Membuat 3 kolom dengan ukuran sama rata (1 fraction) */
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 12px; /* Jarak antar GIF */
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+/* Kontainer setiap item GIF agar persegi */
+.gif-item {
+  width: 100%;
+  /* Trik CSS untuk memaksa element ini selalu persegi sempurna */
+  aspect-ratio: 1 / 1; 
+  background-color: #222; /* Warna placeholder sebelum GIF load */
+  border-radius: 12px;
+  overflow: hidden; /* Pastikan GIF tidak keluar dari border-radius */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+/* Efek zoom sedikit saat kursor mengarah ke GIF */
+.gif-item:hover {
+  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Mengatur agar GIF mengisi penuh kotak persegi tanpa gepeng */
+.gif-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Isi penuh, potong jika tidak muat (ala Instagram Grid) */
+}
