@@ -1,8 +1,4 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 #root {
   width: 100%;
@@ -11,7 +7,6 @@
 }
 
 body {
-  /* Background gradient animasi yang elegan */
   background: linear-gradient(-45deg, #0f172a, #1e1b4b, #000000, #171717);
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
@@ -46,19 +41,8 @@ body {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
-h1 {
-  font-size: 1.8rem;
-  margin-bottom: 5px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-p {
-  font-size: 0.95rem;
-  color: #a1a1aa;
-  margin-bottom: 30px;
-  line-height: 1.6;
-}
+h1 { font-size: 1.8rem; margin-bottom: 5px; font-weight: 700; letter-spacing: 0.5px; }
+p { font-size: 0.95rem; color: #a1a1aa; margin-bottom: 30px; line-height: 1.6; }
 
 .section-title {
   font-size: 1rem;
@@ -71,6 +55,9 @@ p {
   padding-bottom: 10px;
 }
 
+.section-title.connect-section { margin-top: 35px; }
+.section-title.gif-section { margin-top: 40px; }
+
 .link-button {
   display: flex;
   align-items: center;
@@ -82,7 +69,6 @@ p {
   color: white;
   padding: 16px 20px;
   width: 100%; 
-  
   max-width: 400px; 
   margin: 12px auto; 
   border-radius: 12px;
@@ -98,176 +84,10 @@ p {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-.section-title.connect-section {
-  margin-top: 35px;
-}
-
-/* Judul baru untuk galeri GIF */
-.section-title.gif-section {
-  margin-top: 40px;
-}
-
-/* Kontainer Utama Galeri dengan CSS Grid */
-.gif-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); 
-  gap: 24px; /* Jarak antar GIF diperbesar agar lebih rapi */
-  margin-top: 30px;
-  margin-bottom: 40px;
-}
-/* Kontainer setiap item GIF agar persegi */
-.gif-item {
-  width: 100%;
-  aspect-ratio: 1 / 1; 
-  background-color: #222; 
-  border-radius: 16px; /* Ujung kotak dibuat lebih melengkung seperti contoh */
-  overflow: hidden; 
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Bayangan sedikit dipertegas */
-  transition: transform 0.3s ease;
-}
-
-/* Efek zoom sedikit saat kursor mengarah ke GIF */
-.gif-item:hover {
-  transform: scale(1.05);
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
-/* Mengatur agar GIF mengisi penuh kotak persegi tanpa gepeng */
-.gif-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Isi penuh, potong jika tidak muat (ala Instagram Grid) */
-}
-
-/* =========================================
-   STYLE TAMBAHAN UNTUK GALERI (HOVER)
-========================================= */
-.gif-item {
-  position: relative;
-  cursor: pointer; /* Ubah kursor jadi tangan saat diarahkan ke gambar */
-}
-
-/* Layer hitam transparan saat gambar di-hover */
-.gif-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  font-weight: bold;
-  font-size: 1.2rem;
-  letter-spacing: 2px;
-}
-
-.gif-item:hover .gif-overlay {
-  opacity: 1;
-}
-
-
-/* =========================================
-   STYLE UNTUK LIGHTBOX (MODAL POP-UP)
-========================================= */
-.lightbox-overlay {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.9); /* Latar belakang hitam pekat transparan */
-  z-index: 1000; /* Pastikan selalu berada paling atas */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.lightbox-content {
-  max-width: 80vw; /* Maksimal lebar gambar 80% dari layar */
-  max-height: 85vh; /* Maksimal tinggi gambar 85% dari layar */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.lightbox-content img {
-  max-width: 100%;
-  max-height: 85vh;
-  object-fit: contain; /* Tampilkan gambar utuh tanpa terpotong */
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-/* Tombol Navigasi Lightbox */
-.lightbox-close,
-.lightbox-nav {
-  position: absolute;
-  background: none;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  z-index: 1001;
-}
-
-.lightbox-close:hover,
-.lightbox-nav:hover {
-  opacity: 1;
-  transform: scale(1.1);
-}
-
-.lightbox-close {
-  top: 30px;
-  right: 30px;
-}
-
-.lightbox-nav.left {
-  left: 30px;
-}
-
-.lightbox-nav.right {
-  right: 30px;
-}
-
-
-/* =========================================
-   RESPONSIVE (UNTUK LAYAR MOBILE / HP)
-========================================= */
 @media screen and (max-width: 768px) {
-  /* Di layar tablet/HP besar, ubah grid jadi 2 kolom */
-  .gif-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-
-  .container {
-    padding: 20px 15px;
-  }
-
-  /* Navigasi Lightbox di HP didekatkan */
-  .lightbox-nav.left { left: 10px; }
-  .lightbox-nav.right { right: 10px; }
-  .lightbox-close { top: 20px; right: 20px; }
-  
-  .lightbox-content {
-    max-width: 95vw;
-  }
+  .container { padding: 20px 15px; }
 }
-
 @media screen and (max-width: 480px) {
-  /* Di layar HP kecil, ubah grid jadi 1 kolom berderet ke bawah */
-  .gif-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .profile-pic {
-    width: 100px;
-    height: 100px;
-  }
-
+  .profile-pic { width: 100px; height: 100px; }
   h1 { font-size: 1.5rem; }
 }

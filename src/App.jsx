@@ -1,24 +1,26 @@
+// Jangan lupa import useState dan AnimatePresence
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-// Tambahkan FaTimes (X), FaChevronLeft (<), dan FaChevronRight (>)
-import { FaInstagram, FaGithub, FaLinkedin, FaLeaf, FaBuilding, FaBookOpen, FaClone, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa'; 
+// Kembalikan ikon navigasi Lightbox
+import { FaPalette, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa'; 
 import './App.css';
+import './Gallery.css'; // <-- IMPORT FILE CSS BARU
 
 import profilePic from './assets/profile.gif'; 
+import staticWork from './assets/work1.jpg'; 
 
-// Import GIF Galeri
-import gif1 from './assets/creation1.gif';
-import gif2 from './assets/creation2.gif';
-import gif3 from './assets/creation3.gif';
-import gif4 from './assets/creation4.gif';
-import gif5 from './assets/creation5.gif';
-import gif6 from './assets/creation6.gif';
-import gif7 from './assets/creation7.gif';
-import gif8 from './assets/creation8.gif';
-import gif9 from './assets/creation9.gif';
+// Import Animasi
+import anim1 from './assets/anim1.gif';
+import anim2 from './assets/anim2.gif';
+import anim3 from './assets/anim3.gif';
+import anim4 from './assets/anim4.gif';
+import anim5 from './assets/anim5.gif';
+import anim6 from './assets/anim6.gif';
+import anim7 from './assets/anim7.gif';
+import anim8 from './assets/anim8.gif';
 
 function App() {
-  // STATE untuk menyimpan index gambar yang sedang dibuka di Lightbox
+  // 1. KEMBALIKAN STATE LIGHTBOX
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
   const itemVariants = {
@@ -26,20 +28,28 @@ function App() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
   };
 
-  const galleryGifs = [gif1, gif2, gif3, gif4, gif5, gif6, gif7, gif8, gif9];
+  const animations = [anim1, anim2, anim3, anim4, anim5, anim6, anim7, anim8];
+  const staticIndex = 4;
 
-  // FUNGSI NAVIGASI LIGHTBOX
+  // 2. GABUNGKAN DATA: Buat array berisi 9 item urut (animasi 0-3, statis, animasi 4-7)
+  const galleryItems = [
+    ...animations.slice(0, staticIndex),
+    staticWork,
+    ...animations.slice(staticIndex)
+  ];
+
+  // 3. KEMBALIKAN FUNGSI NAVIGASI
   const openLightbox = (index) => setSelectedImageIndex(index);
   const closeLightbox = () => setSelectedImageIndex(null);
   
   const showPrev = (e) => {
-    e.stopPropagation(); // Mencegah klik tembus ke background (yang menutup lightbox)
-    setSelectedImageIndex((prev) => (prev === 0 ? galleryGifs.length - 1 : prev - 1));
+    e.stopPropagation(); 
+    setSelectedImageIndex((prev) => (prev === 0 ? galleryItems.length - 1 : prev - 1));
   };
   
   const showNext = (e) => {
     e.stopPropagation();
-    setSelectedImageIndex((prev) => (prev === galleryGifs.length - 1 ? 0 : prev + 1));
+    setSelectedImageIndex((prev) => (prev === galleryItems.length - 1 ? 0 : prev + 1));
   };
 
   return (
@@ -50,57 +60,51 @@ function App() {
           animate="visible"
           variants={{ visible: { transition: { staggerChildren: 0.15 } } }}
         >
-          {/* Bagian Profil & Projects tetap sama */}
           <motion.img variants={itemVariants} src={profilePic} alt="Profile" className="profile-pic" />
           <motion.h1 variants={itemVariants}>Ismet Maulana Azhari</motion.h1>
           <motion.p variants={itemVariants}>
             Informatics Student | Web & Mobile Developer
-            <br/>
-            Passionate about Data, Cloud, and Software Engineering.
+            <br/> Passionate about Data, Cloud, and Software Engineering.
           </motion.p>
+          
           <motion.h2 variants={itemVariants} className="section-title connect-section">Connect With Me</motion.h2>
-          <div className="social-links-container">
-            <motion.a variants={itemVariants} href="#" target="_blank" rel="noreferrer" className="link-button">
-              <FaGithub size={20} /> GitHub
-            </motion.a>
-            <motion.a variants={itemVariants} href="#" target="_blank" rel="noreferrer" className="link-button">
-              <FaLinkedin size={20} color="#0a66c2" /> LinkedIn
-            </motion.a>
-            <motion.a variants={itemVariants} href="#" target="_blank" rel="noreferrer" className="link-button">
-              <FaInstagram size={20} color="#e1306c" /> Instagram
-            </motion.a>
-          </div>
+          <motion.a variants={itemVariants} href="#" target="_blank" rel="noreferrer" className="link-button">GitHub</motion.a>
+          <motion.a variants={itemVariants} href="#" target="_blank" rel="noreferrer" className="link-button">LinkedIn</motion.a>
+          <motion.a variants={itemVariants} href="#" target="_blank" rel="noreferrer" className="link-button">Instagram</motion.a>
 
           <motion.h2 variants={itemVariants} className="section-title gif-section">
-            <FaClone size={18} style={{marginRight: 8, verticalAlign: 'middle'}} /> Recent Creations
+            <FaPalette size={18} style={{marginRight: 8, verticalAlign: 'middle'}} /> Concept Gallery
           </motion.h2>
 
-          {/* GRID GALERI */}
           <motion.div
-            className="gif-grid"
+            className="mixed-grid"
             variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
             initial="hidden"
             animate="visible"
           >
-            {galleryGifs.map((gif, index) => (
+            {/* 4. RENDER DARI ARRAY GABUNGAN (galleryItems) */}
+            {galleryItems.map((item, index) => (
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="gif-item"
-                onClick={() => openLightbox(index)} // Buka lightbox saat diklik
+                // Tambahkan class khusus jika indeks adalah staticIndex
+                className={`grid-item ${index === staticIndex ? 'static-item' : 'anim-item'}`}
+                onClick={() => openLightbox(index)} // <-- Fungsi pencet dikembalikan
               >
-                <img src={gif} alt={`Creation ${index + 1}`} loading="lazy" />
-                {/* Efek hover overlay */}
+                <img src={item} alt={`Gallery item ${index}`} loading="lazy" />
+                
+                {/* Overlay View (Hover gelap) dikembalikan */}
                 <div className="gif-overlay">
                   <span>View</span>
                 </div>
               </motion.div>
             ))}
           </motion.div>
+
         </motion.div>
       </div>
 
-      {/* KOMPONEN LIGHTBOX / POP-UP */}
+      {/* 5. KEMBALIKAN MODAL POP-UP LIGHTBOX */}
       <AnimatePresence>
         {selectedImageIndex !== null && (
           <motion.div 
@@ -108,30 +112,26 @@ function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={closeLightbox} // Tutup jika background diklik
+            onClick={closeLightbox}
           >
-            {/* Tombol Close di Kanan Atas */}
             <button className="lightbox-close" onClick={closeLightbox}>
               <FaTimes size={30} />
             </button>
 
-            {/* Tombol Kiri */}
             <button className="lightbox-nav left" onClick={showPrev}>
               <FaChevronLeft size={40} />
             </button>
 
-            {/* Gambar Utama yang Sedang Dibuka */}
             <motion.div 
               className="lightbox-content"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()} // Cegah tutup saat gambar diklik
+              onClick={(e) => e.stopPropagation()}
             >
-              <img src={galleryGifs[selectedImageIndex]} alt="Enlarged view" />
+              <img src={galleryItems[selectedImageIndex]} alt="Enlarged view" />
             </motion.div>
 
-            {/* Tombol Kanan */}
             <button className="lightbox-nav right" onClick={showNext}>
               <FaChevronRight size={40} />
             </button>
