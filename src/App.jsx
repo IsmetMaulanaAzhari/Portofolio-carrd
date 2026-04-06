@@ -68,9 +68,9 @@ function App() {
           </motion.p>
           
           <motion.h2 variants={itemVariants} className="section-title connect-section">Connect With Me</motion.h2>
-          <motion.a variants={itemVariants} href="#" target="_blank" rel="noreferrer" className="link-button">GitHub</motion.a>
-          <motion.a variants={itemVariants} href="#" target="_blank" rel="noreferrer" className="link-button">LinkedIn</motion.a>
-          <motion.a variants={itemVariants} href="#" target="_blank" rel="noreferrer" className="link-button">Instagram</motion.a>
+          <motion.a variants={itemVariants} href="https://github.com/IsmetMaulanaAzhari" target="_blank" rel="noreferrer" className="link-button">GitHub</motion.a>
+          <motion.a variants={itemVariants} href="https://www.linkedin.com/in/ismetmazhari/" target="_blank" rel="noreferrer" className="link-button">LinkedIn</motion.a>
+          <motion.a variants={itemVariants} href="https://instagram.com/ismetazhary" target="_blank" rel="noreferrer" className="link-button">Instagram</motion.a>
 
           <motion.h2 variants={itemVariants} className="section-title gif-section">
             <FaPalette size={18} style={{marginRight: 8, verticalAlign: 'middle'}} /> Concept Gallery
