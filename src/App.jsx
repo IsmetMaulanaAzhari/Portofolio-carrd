@@ -6,18 +6,31 @@ import { FaPalette, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/f
 import './App.css';
 import './Gallery.css'; // <-- IMPORT FILE CSS BARU
 
-import profilePic from './assets/profile.gif'; 
-import staticWork from './assets/work1.jpg'; 
+// Auto-load semua gambar dari assets supaya tidak perlu tambah import manual.
+const allAssetImages = import.meta.glob('./assets/*.{png,jpg,jpeg,gif,webp,avif}', {
+  eager: true,
+  import: 'default'
+});
 
-// Import Animasi
-import anim1 from './assets/anim1.gif';
-import anim2 from './assets/anim2.gif';
-import anim3 from './assets/anim3.gif';
-import anim4 from './assets/anim4.gif';
-import anim5 from './assets/anim5.gif';
-import anim6 from './assets/anim6.gif';
-import anim7 from './assets/anim7.gif';
-import anim8 from './assets/anim8.gif';
+const getFileName = (path) => path.split('/').pop() || '';
+
+const naturalSort = (a, b) =>
+  a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
+
+const profilePic = allAssetImages['./assets/profile.gif'];
+
+const galleryItems = Object.entries(allAssetImages)
+  .filter(([path]) => getFileName(path) !== 'profile.gif')
+  .map(([path, src]) => {
+    const fileName = getFileName(path);
+    const extension = fileName.split('.').pop()?.toLowerCase() || '';
+    return {
+      fileName,
+      src,
+      isStatic: extension !== 'gif'
+    };
+  })
+  .sort((a, b) => naturalSort(a.fileName, b.fileName));
 
 function App() {
   // 1. KEMBALIKAN STATE LIGHTBOX
@@ -27,16 +40,6 @@ function App() {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
   };
-
-  const animations = [anim1, anim2, anim3, anim4, anim5, anim6, anim7, anim8];
-  const staticIndex = 4;
-
-  // 2. GABUNGKAN DATA: Buat array berisi 9 item urut (animasi 0-3, statis, animasi 4-7)
-  const galleryItems = [
-    ...animations.slice(0, staticIndex),
-    staticWork,
-    ...animations.slice(staticIndex)
-  ];
 
   // 3. KEMBALIKAN FUNGSI NAVIGASI
   const openLightbox = (index) => setSelectedImageIndex(index);
@@ -85,13 +88,12 @@ function App() {
             {/* 4. RENDER DARI ARRAY GABUNGAN (galleryItems) */}
             {galleryItems.map((item, index) => (
               <motion.div
-                key={index}
+                key={item.fileName}
                 variants={itemVariants}
-                // Tambahkan class khusus jika indeks adalah staticIndex
-                className={`grid-item ${index === staticIndex ? 'static-item' : 'anim-item'}`}
+                className={`grid-item ${item.isStatic ? 'static-item' : 'anim-item'}`}
                 onClick={() => openLightbox(index)} // <-- Fungsi pencet dikembalikan
               >
-                <img src={item} alt={`Gallery item ${index}`} loading="lazy" />
+                <img src={item.src} alt={`Gallery item ${index}`} loading="lazy" />
                 
                 {/* Overlay View (Hover gelap) dikembalikan */}
                 <div className="gif-overlay">
@@ -129,7 +131,7 @@ function App() {
               exit={{ scale: 0.8, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <img src={galleryItems[selectedImageIndex]} alt="Enlarged view" />
+              <img src={galleryItems[selectedImageIndex].src} alt="Enlarged view" />
             </motion.div>
 
             <button className="lightbox-nav right" onClick={showNext}>
