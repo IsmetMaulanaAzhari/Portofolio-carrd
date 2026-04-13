@@ -32,6 +32,16 @@ const galleryItems = Object.entries(allAssetImages)
   })
   .sort((a, b) => naturalSort(a.fileName, b.fileName));
 
+const chunkArray = (items, chunkSize) => {
+  const chunks = [];
+  for (let i = 0; i < items.length; i += chunkSize) {
+    chunks.push(items.slice(i, i + chunkSize));
+  }
+  return chunks;
+};
+
+const galleryGroups = chunkArray(galleryItems, 9);
+
 function App() {
   // 1. KEMBALIKAN STATE LIGHTBOX
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
@@ -79,29 +89,35 @@ function App() {
             <FaPalette size={18} style={{marginRight: 8, verticalAlign: 'middle'}} /> Concept Gallery
           </motion.h2>
 
-          <motion.div
-            className="mixed-grid"
-            variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
-            initial="hidden"
-            animate="visible"
-          >
-            {/* 4. RENDER DARI ARRAY GABUNGAN (galleryItems) */}
-            {galleryItems.map((item, index) => (
+          <div className="gallery-wrapper">
+            {galleryGroups.map((group, groupIndex) => (
               <motion.div
-                key={item.fileName}
-                variants={itemVariants}
-                className={`grid-item ${item.isStatic ? 'static-item' : 'anim-item'}`}
-                onClick={() => openLightbox(index)} // <-- Fungsi pencet dikembalikan
+                key={`group-${groupIndex}`}
+                className="mixed-grid"
+                variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
+                initial="hidden"
+                animate="visible"
               >
-                <img src={item.src} alt={`Gallery item ${index}`} loading="lazy" />
-                
-                {/* Overlay View (Hover gelap) dikembalikan */}
-                <div className="gif-overlay">
-                  <span>View</span>
-                </div>
+                {group.map((item, indexInGroup) => {
+                  const index = groupIndex * 9 + indexInGroup;
+                  return (
+                    <motion.div
+                      key={item.fileName}
+                      variants={itemVariants}
+                      className={`grid-item ${item.isStatic ? 'static-item' : 'anim-item'}`}
+                      onClick={() => openLightbox(index)}
+                    >
+                      <img src={item.src} alt={`Gallery item ${index}`} loading="lazy" />
+
+                      <div className="gif-overlay">
+                        <span>View</span>
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </motion.div>
             ))}
-          </motion.div>
+          </div>
 
         </motion.div>
       </div>

@@ -1,13 +1,23 @@
 /* =========================================
    MIXED GRID (GALERI 3x3 CAMPURAN)
 ========================================= */
+.gallery-wrapper {
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(112px, 18vw, 272px);
+}
+
 .mixed-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr); 
   /* grid-template-rows: repeat(3, 1fr);  */
   gap: 12px;
-  margin-top: 30px;
-  margin-bottom: 40px;
+  width: min(100%, 840px);
+  margin: 0 auto;
 }
 
 .grid-item {
@@ -115,6 +125,10 @@
    RESPONSIVE GALERI
 ========================================= */
 @media screen and (max-width: 768px) {
+  .gallery-wrapper {
+    gap: clamp(28px, 6vw, 52px);
+  }
+
   .mixed-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
@@ -126,6 +140,10 @@
 }
 
 @media screen and (max-width: 480px) {
+  .gallery-wrapper {
+    gap: 24px;
+  }
+
   .mixed-grid {
     grid-template-columns: 1fr;
     gap: 20px;
