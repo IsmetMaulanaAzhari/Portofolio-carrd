@@ -32,6 +32,36 @@ const galleryItems = Object.entries(allAssetImages)
   })
   .sort((a, b) => naturalSort(a.fileName, b.fileName));
 
+const animationItems = galleryItems.filter((item) => !item.isStatic);
+const staticItems = galleryItems.filter((item) => item.isStatic);
+
+const arrangeCenteredGridPattern = (animations, statics) => {
+  if (animations.length === 0 || statics.length === 0) {
+    return galleryItems;
+  }
+
+  const groupsCount = Math.max(statics.length, Math.ceil(animations.length / 8));
+  const arranged = [];
+  let animationCursor = 0;
+
+  for (let groupIndex = 0; groupIndex < groupsCount; groupIndex += 1) {
+    const centerImage = statics[groupIndex % statics.length];
+
+    for (let slot = 0; slot < 9; slot += 1) {
+      if (slot === 4) {
+        arranged.push(centerImage);
+      } else {
+        arranged.push(animations[animationCursor % animations.length]);
+        animationCursor += 1;
+      }
+    }
+  }
+
+  return arranged;
+};
+
+const arrangedGalleryItems = arrangeCenteredGridPattern(animationItems, staticItems);
+
 const chunkArray = (items, chunkSize) => {
   const chunks = [];
   for (let i = 0; i < items.length; i += chunkSize) {
@@ -40,7 +70,7 @@ const chunkArray = (items, chunkSize) => {
   return chunks;
 };
 
-const galleryGroups = chunkArray(galleryItems, 9);
+const galleryGroups = chunkArray(arrangedGalleryItems, 9);
 
 function App() {
   // 1. KEMBALIKAN STATE LIGHTBOX
@@ -57,12 +87,12 @@ function App() {
   
   const showPrev = (e) => {
     e.stopPropagation(); 
-    setSelectedImageIndex((prev) => (prev === 0 ? galleryItems.length - 1 : prev - 1));
+    setSelectedImageIndex((prev) => (prev === 0 ? arrangedGalleryItems.length - 1 : prev - 1));
   };
   
   const showNext = (e) => {
     e.stopPropagation();
-    setSelectedImageIndex((prev) => (prev === galleryItems.length - 1 ? 0 : prev + 1));
+    setSelectedImageIndex((prev) => (prev === arrangedGalleryItems.length - 1 ? 0 : prev + 1));
   };
 
   return (
@@ -102,7 +132,7 @@ function App() {
                   const index = groupIndex * 9 + indexInGroup;
                   return (
                     <motion.div
-                      key={item.fileName}
+                      key={`${item.fileName}-${index}`}
                       variants={itemVariants}
                       className={`grid-item ${item.isStatic ? 'static-item' : 'anim-item'}`}
                       onClick={() => openLightbox(index)}
@@ -147,7 +177,7 @@ function App() {
               exit={{ scale: 0.8, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <img src={galleryItems[selectedImageIndex].src} alt="Enlarged view" />
+              <img src={arrangedGalleryItems[selectedImageIndex].src} alt="Enlarged view" />
             </motion.div>
 
             <button className="lightbox-nav right" onClick={showNext}>
