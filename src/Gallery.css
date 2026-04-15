@@ -87,16 +87,37 @@
   max-width: 80vw; 
   max-height: 85vh; 
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 12px;
 }
 
 .lightbox-content img {
   max-width: 100%;
-  max-height: 85vh;
+  max-height: 78vh;
   object-fit: contain; 
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-meta {
+  text-align: center;
+}
+
+.lightbox-type {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #93c5fd;
+  margin-bottom: 4px;
+}
+
+.lightbox-name {
+  font-size: 0.95rem;
+  color: #ffffff;
+  max-width: 80vw;
+  overflow-wrap: anywhere;
 }
 
 .lightbox-close,

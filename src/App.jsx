@@ -62,6 +62,8 @@ const arrangeCenteredGridPattern = (animations, statics) => {
 
 const arrangedGalleryItems = arrangeCenteredGridPattern(animationItems, staticItems);
 
+const getMediaLabel = (item) => (item.isStatic ? 'Gambar' : 'Animasi');
+
 const chunkArray = (items, chunkSize) => {
   const chunks = [];
   for (let i = 0; i < items.length; i += chunkSize) {
@@ -75,6 +77,7 @@ const galleryGroups = chunkArray(arrangedGalleryItems, 9);
 function App() {
   // 1. KEMBALIKAN STATE LIGHTBOX
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+  const selectedItem = selectedImageIndex !== null ? arrangedGalleryItems[selectedImageIndex] : null;
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -140,7 +143,7 @@ function App() {
                       <img src={item.src} alt={`Gallery item ${index}`} loading="lazy" />
 
                       <div className="gif-overlay">
-                        <span>View</span>
+                        <span>{`View ${getMediaLabel(item)}`}</span>
                       </div>
                     </motion.div>
                   );
@@ -177,7 +180,11 @@ function App() {
               exit={{ scale: 0.8, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <img src={arrangedGalleryItems[selectedImageIndex].src} alt="Enlarged view" />
+              <img src={selectedItem?.src} alt="Enlarged view" />
+              <div className="lightbox-meta">
+                <p className="lightbox-type">{getMediaLabel(selectedItem)}</p>
+                <p className="lightbox-name">{selectedItem?.fileName}</p>
+              </div>
             </motion.div>
 
             <button className="lightbox-nav right" onClick={showNext}>
