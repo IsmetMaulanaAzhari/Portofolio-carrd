@@ -64,6 +64,14 @@ const arrangedGalleryItems = arrangeCenteredGridPattern(animationItems, staticIt
 
 const getMediaLabel = (item) => (item.isStatic ? 'Gambar' : 'Animasi');
 
+// Kamu bisa ubah label per file di sini, contoh: 'anim1.gif': 'Tinju'
+const customMediaLabels = {
+  // 'anim1.gif': 'Tinju',
+  // 'anim2.gif': 'Mati',
+};
+
+const getDisplayLabel = (item) => customMediaLabels[item.fileName] || getMediaLabel(item);
+
 const chunkArray = (items, chunkSize) => {
   const chunks = [];
   for (let i = 0; i < items.length; i += chunkSize) {
@@ -183,7 +191,7 @@ function App() {
               <img src={selectedItem?.src} alt="Enlarged view" />
               <div className="lightbox-meta">
                 <p className="lightbox-type">{getMediaLabel(selectedItem)}</p>
-                <p className="lightbox-name">{selectedItem?.fileName}</p>
+                <p className="lightbox-name">{selectedItem ? getDisplayLabel(selectedItem) : ''}</p>
               </div>
             </motion.div>
 
