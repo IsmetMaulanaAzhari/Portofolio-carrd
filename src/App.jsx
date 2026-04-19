@@ -32,8 +32,33 @@ const galleryItems = Object.entries(allAssetImages)
   })
   .sort((a, b) => naturalSort(a.fileName, b.fileName));
 
-const animationItems = galleryItems.filter((item) => !item.isStatic);
+const normalizeAssetToken = (value = '') =>
+  value.toLowerCase().replace(/\.(gif|png|jpg|jpeg|webp|avif)$/, '').trim();
+
+const allAnimationItems = galleryItems.filter((item) => !item.isStatic);
 const staticItems = galleryItems.filter((item) => item.isStatic);
+
+// Mode manual urutan animasi.
+// Boleh isi pakai nama dengan ekstensi ('anim1.gif') atau tanpa ekstensi ('anim1').
+const manualAnimationOrder = [
+  // 'anim1',
+  // 'anim2.gif',
+  // 'funny-cat',
+];
+
+const findAnimationByToken = (token) => {
+  const normalizedToken = normalizeAssetToken(token);
+  return allAnimationItems.find(
+    (item) => normalizeAssetToken(item.fileName) === normalizedToken
+  );
+};
+
+const animationItems =
+  manualAnimationOrder.length > 0
+    ? manualAnimationOrder
+        .map((token) => findAnimationByToken(token))
+        .filter(Boolean)
+    : allAnimationItems;
 
 const arrangeCenteredGridPattern = (animations, statics) => {
   if (animations.length === 0 || statics.length === 0) {
