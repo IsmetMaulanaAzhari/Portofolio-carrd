@@ -91,8 +91,9 @@ const getMediaLabel = (item) => (item.isStatic ? 'Gambar' : 'Animasi');
 
 // Kamu bisa ubah label per file di sini, contoh: 'anim1.gif': 'Tinju'
 const customMediaLabels = {
-  // 'anim1.gif': 'Tinju',
-  // 'anim2.gif': 'Mati',
+  'anim1.gif': 'Lari',
+  'anim2.gif': 'Melompat',
+  'Lizard Hello GIF.gif': 'Hello',
 };
 
 const getDisplayLabel = (item) => customMediaLabels[item.fileName] || getMediaLabel(item);
