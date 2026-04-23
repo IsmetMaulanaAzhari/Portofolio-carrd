@@ -8,14 +8,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(112px, 18vw, 272px);
+  gap: clamp(100px, 16vw, 220px);
 }
 
 .mixed-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr); 
-  /* grid-template-rows: repeat(3, 1fr);  */
-  gap: 12px;
+  gap: 14px;
   width: min(100%, 840px);
   margin: 0 auto;
 }
@@ -24,21 +23,22 @@
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1; 
-  background-color: #222; 
-  border-radius: 12px;
+  background-color: rgba(16, 23, 46, 0.75);
+  border-radius: 16px;
   overflow: hidden; 
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(195, 214, 255, 0.18);
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease, border-color 0.3s ease;
-  cursor: pointer; /* Ubah kursor jadi tangan */
+  box-shadow: 0 10px 24px rgba(8, 14, 38, 0.38);
+  transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+  cursor: pointer;
 }
 
 .grid-item:hover {
-  transform: scale(1.03);
-  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-4px) scale(1.02);
+  border-color: rgba(164, 252, 236, 0.58);
+  box-shadow: 0 18px 28px rgba(7, 16, 50, 0.45);
 }
 
 .grid-item img {
@@ -48,22 +48,22 @@
 }
 
 /* Style batas sel statis dan animasi */
-.static-item { border-color: rgba(239, 68, 68, 0.3); }
-.anim-item { border-color: rgba(59, 130, 246, 0.3); }
+.static-item { border-color: rgba(255, 129, 129, 0.35); }
+.anim-item { border-color: rgba(115, 184, 255, 0.34); }
 
 /* Efek Hover View Gelap */
 .gif-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: linear-gradient(to top, rgba(3, 5, 16, 0.7), rgba(6, 12, 34, 0.25));
   display: flex;
   justify-content: center;
   align-items: center;
   opacity: 0;
-  transition: opacity 0.3s ease;
-  font-weight: bold;
-  font-size: 1.2rem;
-  letter-spacing: 2px;
+  transition: opacity 0.25s ease;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
 }
 
 .grid-item:hover .gif-overlay {
@@ -76,7 +76,7 @@
 .lightbox-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.9); 
+  background-color: rgba(2, 6, 18, 0.92);
   z-index: 1000; 
   display: flex;
   justify-content: center;
@@ -86,6 +86,12 @@
 .lightbox-content {
   max-width: 80vw; 
   max-height: 85vh; 
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(194, 211, 255, 0.22);
+  background: rgba(8, 12, 32, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -123,11 +129,14 @@
 .lightbox-close,
 .lightbox-nav {
   position: absolute;
-  background: none;
-  border: none;
+  background: rgba(9, 16, 38, 0.65);
+  border: 1px solid rgba(174, 201, 255, 0.28);
+  border-radius: 12px;
+  width: 52px;
+  height: 52px;
   color: #fff;
   cursor: pointer;
-  opacity: 0.7;
+  opacity: 0.9;
   transition: opacity 0.3s ease, transform 0.3s ease;
   z-index: 1001;
 }
@@ -147,7 +156,7 @@
 ========================================= */
 @media screen and (max-width: 768px) {
   .gallery-wrapper {
-    gap: clamp(28px, 6vw, 52px);
+    gap: clamp(24px, 6vw, 44px);
   }
 
   .mixed-grid {
@@ -167,6 +176,12 @@
 
   .mixed-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 18px;
+  }
+
+  .lightbox-close,
+  .lightbox-nav {
+    width: 44px;
+    height: 44px;
   }
 }

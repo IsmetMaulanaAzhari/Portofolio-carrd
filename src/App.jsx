@@ -2,7 +2,16 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 // Kembalikan ikon navigasi Lightbox
-import { FaPalette, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa'; 
+import {
+  FaPalette,
+  FaTimes,
+  FaChevronLeft,
+  FaChevronRight,
+  FaGithub,
+  FaLinkedin,
+  FaInstagram,
+  FaEnvelope
+} from 'react-icons/fa';
 import './App.css';
 import './Gallery.css'; // <-- IMPORT FILE CSS BARU
 
@@ -136,6 +145,7 @@ function App() {
     <>
       <div className="container">
         <motion.div
+          className="main-panel"
           initial="hidden"
           animate="visible"
           variants={{ visible: { transition: { staggerChildren: 0.15 } } }}
@@ -185,6 +195,47 @@ function App() {
               </motion.div>
             ))}
           </div>
+
+          <motion.footer variants={itemVariants} className="site-footer">
+            <p className="footer-title">Find Me Online</p>
+            <div className="footer-socials">
+              <a
+                href="https://github.com/IsmetMaulanaAzhari"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="GitHub"
+                className="footer-icon"
+              >
+                <FaGithub size={20} />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/ismetmazhari/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn"
+                className="footer-icon"
+              >
+                <FaLinkedin size={20} />
+              </a>
+              <a
+                href="https://instagram.com/ismetazhary"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="footer-icon"
+              >
+                <FaInstagram size={20} />
+              </a>
+              <a
+                href="mailto:ismetmaulanaazhari@gmail.com"
+                aria-label="Email"
+                className="footer-icon"
+              >
+                <FaEnvelope size={20} />
+              </a>
+            </div>
+            <p className="footer-copy">Built with React and Framer Motion.</p>
+          </motion.footer>
 
         </motion.div>
       </div>
