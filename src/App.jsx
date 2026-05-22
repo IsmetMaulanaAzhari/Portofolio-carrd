@@ -1,5 +1,5 @@
 // Jangan lupa import useState dan AnimatePresence
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 // Kembalikan ikon navigasi Lightbox
 import {
